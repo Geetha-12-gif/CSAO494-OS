@@ -1,4 +1,5 @@
 #include<stdio.h>
+
 int main() {
   int time, burst_time[10], at[10], sum_burst_time = 0, smallest, n, i;
   int sumt = 0, sumw = 0;
@@ -25,5 +26,7 @@ int main() {
     burst_time[smallest] = 0;
   }
   printf("\n\n average waiting time = %f", sumw * 1.0 / n);
-  printf("\n\n average turnaround time = %f", sumt * 1.0 /n);
+  printf("\n\n average turnaround time = %f", sumt * 1.0 / n);
+  return 0;
 }
+
