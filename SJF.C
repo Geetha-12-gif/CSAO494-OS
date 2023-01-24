@@ -1,50 +1,47 @@
-#include<stdio.h>
+#include <stdio.h>
 int main()
 {
-	int n,p[20],bt[20],wt[20],twt=0,ttat=0,i,temp,pos,j;
-	float awt,atat;
-	printf("enter the number of process:");
-	scanf("%d",&n);
-	printf("enter the process of brust time:");
-	for(i=0;i<n;i++)
-	{
-		printf("p%d ",i+1);
-		scanf("%d",&bt[i]);
-		p[i]=i+1;
+	int A[100][4];
+	int i, j, n, total = 0, index, temp;
+	float avg_wt, avg_tat;
+	printf("Enter number of process: ");
+	scanf("%d", &n);
+	printf("Enter Burst Time:\n");
+	for (i = 0; i < n; i++) {
+		printf("P%d: ", i + 1);
+		scanf("%d", &A[i][1]);
+		A[i][0] = i + 1;
 	}
-	for(i=0;i<n;i++)
-	{
-		pos=i;
-		for(j=i+1;j<n;j++)
-		{
-		   if(bt[j]<bt[pos])
-		   	pos=j;
-	    }
-		temp=bt[i];
-		bt[i]=bt[pos];
-		bt[pos]=temp;
-			
-		temp=bt[i];
-		p[i]=p[pos];
-		p[pos]=temp;	
+	for (i = 0; i < n; i++) {
+		index = i;
+		for (j = i + 1; j < n; j++)
+			if (A[j][1] < A[index][1])
+				index = j;
+		temp = A[i][1];
+		A[i][1] = A[index][1];
+		A[index][1] = temp;
+
+		temp = A[i][0];
+		A[i][0] = A[index][0];
+		A[index][0] = temp;
 	}
-	wt[0]=0;
-	for(i=1;i<n;i++)
-	{
-		wt[i]=0;
-		for(j=0;j<i;j++)
-		  wt[i]+=bt[j];	
-		twt+=wt[i];
+	A[0][2] = 0;
+	for (i = 1; i < n; i++) {
+		A[i][2] = 0;
+		for (j = 0; j < i; j++)
+			A[i][2] += A[j][1];
+		total += A[i][2];
 	}
-	for(i=0;i<n;i++)
-	{
-		ttat+=(wt[i]+bt[i]);
+	avg_wt = (float)total / n;
+	total = 0;
+	printf("P	 BT	 WT	 TAT\n");
+	for (i = 0; i < n; i++) {
+		A[i][3] = A[i][1] + A[i][2];
+		total += A[i][3];
+		printf("P%d	 %d	 %d	 %d\n", A[i][0],
+			A[i][1], A[i][2], A[i][3]);
 	}
-	printf("\n twt =%d",twt);
-	printf("\n ttat=%d ",ttat);
-	
-	awt=twt/n;
-	atat=ttat/n;
-	printf("\n average wt = %f",awt);
-	printf("\n average tat=%f",atat);
+	avg_tat = (float)total / n;
+	printf("Average Waiting Time= %f", avg_wt);
+	printf("\nAverage Turnaround Time= %f", avg_tat);
 }
